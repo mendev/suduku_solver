@@ -1,5 +1,6 @@
 import csv
 
+from common import box_mapping
 from data_types import Box, Column, Row, Cell
 
 class Matrix(object):
@@ -22,7 +23,8 @@ class Matrix(object):
             self.rows[int(item[1])].insert(int(item[2]))
             self.boxes[box_mapping(int(item[0]),int(item[1]))].insert(int(item[2]))
             self.cells[cell_mapping(int(item[0]),int(item[1]))].insert(int(item[2]))
-    
+        for cell in self.cells:
+            cell.set_location(self.size)
     
     def solve(self):
         print("solving...")
@@ -35,24 +37,6 @@ def read_file(filename):
             response.append((row[0],row[1],row[2]))
     return response
 
-def box_mapping(column, row):
-    if column < 3:
-        if row < 3:
-            return 0
-        if row < 6:
-            return 1
-        return 2
-    if column < 6:
-        if row < 3:
-            return 3
-        if row < 6:
-            return 4
-        return 5
-    if row < 3:
-        return 6
-    if row < 6:
-        return 7
-    return 8
 
 def cell_mapping(column, row):
     return column * 9 + row

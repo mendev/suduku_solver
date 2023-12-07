@@ -1,4 +1,4 @@
-
+from common import box_mapping 
 
 class Container(object):
     
@@ -30,6 +30,7 @@ class Row(Container):
     
     def __init__(self, id):
         super().__init__(id)
+ 
         
 class Cell(Container):
 
@@ -42,6 +43,11 @@ class Cell(Container):
         self.values = [number]
         self.options = [number]
 
+    def set_location(self, size):
+        column = int(self.id / (size - 1))
+        row = int(self.id % size) - 1
+        box = box_mapping(column, row)
+        self.location = (column, row, box)
      
     def is_solved(self):
         """
